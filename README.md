@@ -127,7 +127,6 @@ use `ActiveRecord::Base.create` as we do not want to allow the
 validations to be set via mass-assignment. This does introduce an extra
 step in some places but it shouldn't be that big of a deal.
 
-### Setting 
 ## Authors ##
 
 * [Brian Cardarella](http://twitter.com/bcardarella)
