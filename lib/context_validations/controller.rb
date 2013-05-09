@@ -1,4 +1,33 @@
 module ContextValidations::Controller
+  # Will build the validations used to assign to a model instance
+  #
+  # Passing a context will call the `#{context}_validations` method if available
+  # `#base_validations` will always be called prior to `#{context}_validations`
+  #
+  # If you are using Ruby 2.0+ not passing a context will force an implicit context call
+  # based upon the calling method name.
+  #
+  # examples:
+  #   # Implicit method call will call `#base_validations` then `#create_validations`
+  #   def create
+  #     @user.validations = validations
+  #   end
+  #
+  #   # Will call `#base_validations` then `#create_validations`
+  #   def other_create
+  #     @user.validations = validations(:create)
+  #   end
+  #
+  #   # Will onliy call `#base_validations` because `#update_validations` does not exist
+  #   def update
+  #     @user.validations = validations
+  #   end
+  #
+  #   def create_validations
+  #     ...
+  #   end
+  #
+  # @params [String, Symbol]
   def validations(context = nil)
     if RUBY_VERSION > '2'
       context ||= caller_locations(1, 1).first.label
@@ -11,6 +40,8 @@ module ContextValidations::Controller
     @validations
   end
 
+  # Instance level implementation of `ActiveModel::Validations.validates`
+  # Will accept all of the same options as the class-level model versions of the method
   def validates(*attributes)
     defaults = attributes.extract_options!
     validations = defaults.slice!(*_validates_default_keys)

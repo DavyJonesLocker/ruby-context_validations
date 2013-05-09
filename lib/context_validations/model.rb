@@ -9,10 +9,18 @@ module ContextValidations::Model
     end
   end
 
+  # The collection of validations assigned to this model instance
+  #
+  # @return [Array]
   def validations
     @validations ||= []
   end
 
+  # Use to set the validations collection assigned to this model instance
+  #
+  # Pass an array of validator instances
+  #
+  # @params [ActiveMode::Validations::Validator]
   def validations=(validations)
     @validations = validations.flatten
   end
