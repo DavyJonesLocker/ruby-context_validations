@@ -43,7 +43,7 @@ class ActiveRecord::Base
   include ContextValidations::Model
 end
 
-class ApplicationController
+class ActionController::Base
   include ContextValidations::Controller
 end
 ```
