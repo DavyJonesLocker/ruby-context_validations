@@ -20,7 +20,7 @@ module ContextValidations::Model
   #
   # Pass an array of validator instances
   #
-  # @params [ActiveMode::Validations::Validator]
+  # @param [[ActiveMode::Validations::Validator]]
   def validations=(validations)
     @validations = validations.flatten
   end

@@ -27,7 +27,7 @@ module ContextValidations::Controller
   #     ...
   #   end
   #
-  # @params [String, Symbol]
+  # @param [String, Symbol]
   def validations(context = nil)
     if RUBY_VERSION > '2'
       context ||= caller_locations(1, 1).first.label
