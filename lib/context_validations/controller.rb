@@ -50,7 +50,7 @@ module ContextValidations::Controller
       defaults[:attributes] = [attribute]
       validations.each do |key, options|
         key = "#{key.to_s.camelize}Validator"
-        klass = key.include?('::') ? key.constantize : Module.const_get("ActiveModel::Validations::#{key}")
+        klass = key.include?('::') ? key.constantize : "ActiveModel::Validations::#{key}".constantize
         validator = klass.new(defaults.merge(_parse_validates_options(options)))
         validators << validator
       end
