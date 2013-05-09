@@ -4,17 +4,51 @@
 [![Dependency Status](https://gemnasium.com/dockyard/context_validations.png?travis)](https://gemnasium.com/dockyard/context_validations)
 [![Code Climate](https://codeclimate.com/github/dockyard/context_validations.png)](https://codeclimate.com/github/dockyard/context_validations)
 
-Rails exceptions automatically opened as issues on GitHub
+Context based validations for model instances.
 
 ## Looking for help? ##
 
 If it is a bug [please open an issue on GitHub](https://github.com/dockyard/context_validations/issues).
 
-## About ##
+## Installation ##
 
-Context based validations for model instances.
+In your `Gemfile`
 
-## Example ##
+```ruby
+gem 'context_validations'
+```
+
+You can either mixin the moduels on a case-by-case basis or make the
+changes global:
+
+### Case-by-case ###
+
+```ruby
+# model
+class User < ActiveModel::Base
+  include ContextValidations::Model
+end
+
+# controller
+class UsersController < ApplicationController
+  include ContextValidations::Controller
+end
+```
+
+### Global ###
+Create an initializer: `config/initializers/context_validations.rb`
+
+```ruby
+class ActiveRecord::Base
+  include ContextValidations::Model
+end
+
+class ApplicationController
+  include ContextValidations::Controller
+end
+```
+
+## Usage ##
 
 ```ruby
 class UserController < ApplicationController
@@ -85,7 +119,7 @@ end
 ```
 
 ### Models ###
-When the `ContextValidations::Model` module is mixed into the module all
+When the `ContextValidations::Model` module is mixed into the model all
 of the validation callbacks are removed from that model.
 
 Because we are setting the validations on the instance you should not
@@ -93,6 +127,7 @@ use `ActiveRecord::Base.create` as we do not want to allow the
 validations to be set via mass-assignment. This does introduce an extra
 step in some places but it shouldn't be that big of a deal.
 
+### Setting 
 ## Authors ##
 
 * [Brian Cardarella](http://twitter.com/bcardarella)
