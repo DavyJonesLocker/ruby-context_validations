@@ -29,8 +29,10 @@ describe 'Controller' do
     @controller = UsersController.new
   end
 
-  it 'combines base and create validations for create action, context is implied' do
-    @controller.create.length.must_equal 2
+  if RUBY_VERSION >= '2'
+    it 'combines base and create validations for create action, context is implied' do
+      @controller.create.length.must_equal 2
+    end
   end
 
   it 'combines base and create validations for other create action, context is forced' do

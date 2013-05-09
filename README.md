@@ -61,6 +61,24 @@ A `#base_validations` method is always called prior to
 validations. The result of these methods appends onto a `@validations`
 array.
 
+If you are using `Ruby 2.0+` you can use implicit contexts:
+
+```ruby
+def create
+  @user = User.new(user_params)
+  # Notice we are only calling the #validations method and not passing
+  # context. In this example the context is derived from the calling
+  # method `create`
+  @user.validations = validations  
+end
+
+private
+
+def create_validations
+  ...
+end
+```
+
 ### Models ###
 When the `ContextValidations::Model` module is mixed into the module all
 of the validation callbacks are removed from that model.
