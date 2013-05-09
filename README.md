@@ -34,7 +34,12 @@ class UserController < ApplicationController
   private
 
   def create_validations
+    validates :password, :presence => true
+  end
+
+  def base_validations
     validates :first_name, :last_name, :presence => true
+    validates :password, :confirmation => true
     validates :email, :uniqueness => true, :format => EmailFormat
   end
 end
