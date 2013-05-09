@@ -1,14 +1,14 @@
-# StrongValidations #
+# ContextValidations #
 
-[![Build Status](https://secure.travis-ci.org/dockyard/strong_validations.png?branch=master)](http://travis-ci.org/dockyard/strong_validations)
-[![Dependency Status](https://gemnasium.com/dockyard/strong_validations.png?travis)](https://gemnasium.com/dockyard/strong_validations)
-[![Code Climate](https://codeclimate.com/github/dockyard/strong_validations.png)](https://codeclimate.com/github/dockyard/strong_validations)
+[![Build Status](https://secure.travis-ci.org/dockyard/context_validations.png?branch=master)](http://travis-ci.org/dockyard/context_validations)
+[![Dependency Status](https://gemnasium.com/dockyard/context_validations.png?travis)](https://gemnasium.com/dockyard/context_validations)
+[![Code Climate](https://codeclimate.com/github/dockyard/context_validations.png)](https://codeclimate.com/github/dockyard/context_validations)
 
 Rails exceptions automatically opened as issues on GitHub
 
 ## Looking for help? ##
 
-If it is a bug [please open an issue on GitHub](https://github.com/dockyard/strong_validations/issues).
+If it is a bug [please open an issue on GitHub](https://github.com/dockyard/context_validations/issues).
 
 ## About ##
 
@@ -18,7 +18,7 @@ Context based validations for model instances.
 
 ```ruby
 class UserController < ApplicationController
-  include StrongValidations::Controller
+  include ContextValidations::Controller
 
   def create
     @user = User.new(user_params)
@@ -40,7 +40,7 @@ class UserController < ApplicationController
 end
 
 class User < ActiveRecord::Base
-  include StrongValidations::Model
+  include ContextValidations::Model
 end
 ```
 
@@ -62,7 +62,7 @@ validations. The result of these methods appends onto a `@validations`
 array.
 
 ### Models ###
-When the `StrongValidations::Model` module is mixed into the module all
+When the `ContextValidations::Model` module is mixed into the module all
 of the validation callbacks are removed from that model.
 
 Because we are setting the validations on the instance you should not
@@ -74,7 +74,7 @@ step in some places but it shouldn't be that big of a deal.
 
 * [Brian Cardarella](http://twitter.com/bcardarella)
 
-[We are very thankful for the many contributors](https://github.com/dockyard/strong_validations/graphs/contributors)
+[We are very thankful for the many contributors](https://github.com/dockyard/context_validations/graphs/contributors)
 
 ## Versioning ##
 
@@ -83,7 +83,7 @@ This gem follows [Semantic Versioning](http://semver.org)
 ## Want to help? ##
 
 Please do! We are always looking to improve this gem. Please see our
-[Contribution Guidelines](https://github.com/dockyard/strong_validations/blob/master/CONTRIBUTING.md)
+[Contribution Guidelines](https://github.com/dockyard/context_validations/blob/master/CONTRIBUTING.md)
 on how to properly submit issues and pull requests.
 
 ## Legal ##
