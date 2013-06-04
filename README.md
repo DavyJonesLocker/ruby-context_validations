@@ -132,7 +132,7 @@ step in some places but it shouldn't be that big of a deal.
 Currently only `MiniTest` is supported. We are open to pull requests for supporting additional test frameworks but we only work with `MiniTest` 
 so we probably won't go out of the way to support something we're not using.
 
-We highly recommend using [ValidAttribute](https://github.com/bcardarella/valid_attribute) to test your validations. The following example are done using
+We highly recommend using [ValidAttribute](https://github.com/bcardarella/valid_attribute) to test your validations. The following example is done using
 `ValidAttribute`.
 
 ### MiniTest ###
