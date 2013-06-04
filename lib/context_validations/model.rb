@@ -36,4 +36,18 @@ module ContextValidations::Model
     end
     errors.empty?
   end
+
+  private
+
+  def _validators
+    validations.inject({}) do |hash, validator|
+      attribute = validator.attributes.first
+      if hash.key?(attribute)
+        hash[attribute] << validator
+      else
+        hash[attribute] = [validator]
+      end
+      hash
+    end
+  end
 end
