@@ -29,6 +29,9 @@ module ContextValidations::Model
 
   def run_validations!
     Array.wrap(validations).each do |validator|
+      if validator.respond_to?(:setup)
+        validator.setup(self.class)
+      end
       validator.validate(self)
     end
     errors.empty?
