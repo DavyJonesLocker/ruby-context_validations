@@ -34,7 +34,8 @@ module ContextValidations::Controller
     end
     @validations = []
     base_validations
-    if respond_to?("#{context}_validations")
+    if respond_to?("#{context}_validations") || private_methods.include?("#{context}_validations".to_sym) ||
+      protected_methods.include?("#{context}_validations".to_sym)
       send("#{context}_validations")
     end
     @validations
