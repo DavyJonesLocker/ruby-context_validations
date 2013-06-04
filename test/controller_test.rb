@@ -60,6 +60,27 @@ class PrivateController
   end
 end
 
+class CustomValidator < ActiveModel::EachValidator
+  def validate_each(record, attribute, value)
+    if value != 'awesome'
+      record.errors.add(attribute, 'Failed')
+    end
+  end
+end
+
+class CustomValidatorsController
+  include ContextValidations::Controller
+
+  def create
+    validations(:create)
+  end
+
+  private
+
+  def base_validations
+    validates :first_name, :custom => true
+  end
+end
 
 describe 'Controller' do
   context 'Public validations' do
@@ -99,6 +120,16 @@ describe 'Controller' do
 
     it 'combines base and create validations for other create action, context is forced' do
       @controller.create.length.must_equal 2
+    end
+  end
+
+  context 'Custom validations' do
+    before do
+      @controller = CustomValidatorsController.new
+    end
+
+    it 'combines base and create validations for other create action, context is forced' do
+      @controller.create.length.must_equal 1
     end
   end
 end

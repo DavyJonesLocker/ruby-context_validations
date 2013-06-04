@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'active_model'
 
 EmailFormat = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/
 

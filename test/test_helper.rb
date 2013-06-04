@@ -7,6 +7,7 @@ else
 end
 
 require 'context_validations'
+require 'active_model'
 
 class MiniTest::Spec
   class << self
