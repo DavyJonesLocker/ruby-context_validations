@@ -127,6 +127,37 @@ use `ActiveRecord::Base.create` as we do not want to allow the
 validations to be set via mass-assignment. This does introduce an extra
 step in some places but it shouldn't be that big of a deal.
 
+## Testing ##
+
+Currently only `MiniTest` is supported. We are open to pull requests for supporting additional test frameworks but we only work with `MiniTest` 
+so we probably won't go out of the way to support something we're not using.
+
+We highly recommend using [ValidAttribute](https://github.com/bcardarella/valid_attribute) to test your validations. The following example are done using
+`ValidAttribute`.
+
+### MiniTest ###
+
+You are given access to a `#validations_for(:action_name)` method. You should pass the action in your
+controller that is the context of the validations and use the `#valiadtions=` setter on the model.
+
+This is a common example of how to test:
+
+```ruby
+require 'test_helper'
+
+describe UserController do
+  context 'create' do
+    subject { User.new(:password => 'password', :validations => validations_for(:create)) }
+    it { must have_valid(:name).when('Brian Cardarella') }
+    it { wont have_valid(:name).when(nil, '') }
+  end
+end
+``` 
+
+## ClientSideValidations Support ##
+
+The [ClientSideValidations](https://github.com/bcardarella/client_side_validations) gem is fully supported.
+
 ## Authors ##
 
 * [Brian Cardarella](http://twitter.com/bcardarella)
