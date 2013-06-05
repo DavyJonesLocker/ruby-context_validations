@@ -18,7 +18,7 @@ In your `Gemfile`
 gem 'context_validations'
 ```
 
-You can either mixin the moduels on a case-by-case basis or make the
+You can either mixin the modules on a case-by-case basis or make the
 changes global:
 
 ### Case-by-case ###
@@ -138,7 +138,7 @@ We highly recommend using [ValidAttribute](https://github.com/bcardarella/valid_
 ### MiniTest ###
 
 You are given access to a `#validations_for(:action_name)` method. You should pass the action in your
-controller that is the context of the validations and use the `#valiadtions=` setter on the model.
+controller that is the context of the validations and use the `#validations=` setter on the model.
 
 This is a common example of how to test:
 
