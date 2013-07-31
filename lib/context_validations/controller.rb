@@ -63,7 +63,7 @@ module ContextValidations::Controller
   private
 
   def _validates_default_keys
-    [:if, :unless, :on, :allow_blank, :allow_nil , :strict]
+    [:if, :unless, :on, :allow_blank, :allow_nil , :strict, :message]
   end
 
   def _parse_validates_options(options)
