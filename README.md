@@ -137,12 +137,6 @@ We highly recommend using [ValidAttribute](https://github.com/bcardarella/valid_
 
 ### MiniTest ###
 
-In `/test/test_helper.rb`:
-
-```ruby
-require 'context_validations/minitest'
-```
-
 You are given access to a `#validations_for(:action_name)` method. You should pass the action in your
 controller that is the context of the validations and use the `#validations=` setter on the model.
 
