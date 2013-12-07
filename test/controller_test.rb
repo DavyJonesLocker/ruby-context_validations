@@ -11,6 +11,10 @@ class UsersController
     validations(:create)
   end
 
+  def validate_instance_method
+    validations(:validate_instance_method)
+  end
+
   def update
     validations
   end
@@ -21,6 +25,10 @@ class UsersController
 
   def create_validations
     validates :password, :presence => true
+  end
+
+  def validate_instance_method_validations
+    validate :model_validation
   end
 end
 
@@ -100,6 +108,18 @@ describe 'Controller' do
 
     it 'uses base validations when context validations are not set for update action' do
       @controller.update.length.must_equal 1
+    end
+
+    it 'builds validators using #validate' do
+      @controller.validate_instance_method.length.must_equal 2
+    end
+
+    it 'validations built using #validate run instance methods on the model' do
+      user = User.new
+      user.validations = @controller.validations(:validate_instance_method)
+
+      user.valid?.must_equal false
+      user.errors[:model_validation].must_include 'Error set by instance method on model'
     end
   end
 

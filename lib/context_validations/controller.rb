@@ -41,6 +41,12 @@ module ContextValidations::Controller
     @validations
   end
 
+  # Delegates the validation to ValidateProxyValidator
+  # which will run the validation instance methods on the model.
+  def validate(*args)
+    args.map{ |model_validation| validates model_validation, validate_proxy: true }
+  end
+
   # Instance level implementation of `ActiveModel::Validations.validates`
   # Will accept all of the same options as the class-level model versions of the method
   def validates(*attributes)
@@ -51,8 +57,12 @@ module ContextValidations::Controller
       defaults[:attributes] = [attribute]
       validations.each do |key, options|
         key = "#{key.to_s.camelize}Validator"
-        namespace = defined?(ActiveRecord) ? ActiveRecord::Base : ActiveModel::Validations
-        klass = key.include?('::') ? key.constantize : namespace.const_get(key)
+        if key == 'ValidateProxyValidator'
+          klass = key.constantize
+        else
+          namespace = defined?(ActiveRecord) ? ActiveRecord::Base : ActiveModel::Validations
+          klass = key.include?('::') ? key.constantize : namespace.const_get(key)
+        end
         validator = klass.new(defaults.merge(_parse_validates_options(options)))
         validators << validator
       end
@@ -77,5 +87,11 @@ module ContextValidations::Controller
     else
       { :with => options }
     end
+  end
+end
+
+
+class ValidateProxyValidator < ActiveModel::EachValidator
+  def validate_each(record, attribute, value)
   end
 end

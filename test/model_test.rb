@@ -9,6 +9,10 @@ class User < ActiveRecord::Base
 
   validates :first_name, :presence => true
   validates :email, :format => EmailFormat
+
+  def model_validation
+    self.errors[:model_validation] = 'Error set by instance method on model'
+  end
 end
 
 describe 'Model' do
