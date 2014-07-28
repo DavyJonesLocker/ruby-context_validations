@@ -26,4 +26,21 @@ describe 'Model' do
     @user.valid?.must_equal false
     @user.errors.count.must_equal 2
   end
+
+  it 'respect conditional validations set onto the instance' do
+    validations = [
+      ActiveModel::Validations::PresenceValidator.new(:attributes => [:first_name], :if => :can_validate?),
+      ActiveModel::Validations::PresenceValidator.new(:attributes => [:first_name], :if => Proc.new { |model| model.can_validate? }),
+      ActiveModel::Validations::PresenceValidator.new(:attributes => [:first_name], :unless => :cannot_validate?),
+      ActiveModel::Validations::PresenceValidator.new(:attributes => [:first_name], :unless => Proc.new { |model| model.cannot_validate? })
+    ]
+    def @user.can_validate?
+      false
+    end
+    def @user.cannot_validate?
+      true
+    end
+    @user.validations = validations
+    @user.valid?.must_equal true
+  end
 end

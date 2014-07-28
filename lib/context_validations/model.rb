@@ -32,7 +32,25 @@ module ContextValidations::Model
       if validator.respond_to?(:setup)
         validator.setup(self.class)
       end
-      validator.validate(self)
+      if validator.options[:if]
+        if validator.options[:if].respond_to?(:call)
+          if validator.options[:if].call(self)
+            validator.validate(self)
+          end
+        elsif self.send(validator.options[:if])
+          validator.validate(self)
+        end
+      elsif validator.options[:unless]
+        if validator.options[:unless].respond_to?(:call)
+          if !validator.options[:unless].call(self)
+            validator.validate(self)
+          end
+        elsif !self.send(validator.options[:unless])
+          validator.validate(self)
+        end
+      else
+        validator.validate(self)
+      end
     end
     errors.empty?
   end
