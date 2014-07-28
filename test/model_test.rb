@@ -21,7 +21,11 @@ describe 'Model' do
   end
 
   it 'accepts validations set onto the instance' do
-    validations = [ActiveModel::Validations::PresenceValidator.new(:attributes => [:first_name]), ActiveModel::Validations::FormatValidator.new(:attributes => [:email], :with => EmailFormat), ActiveRecord::Validations::UniquenessValidator.new(:attributes => [:email])]
+    validations = [
+      {class: ActiveModel::Validations::PresenceValidator, options: { :attributes => [:first_name] }},
+      {class: ActiveModel::Validations::FormatValidator, options: { :attributes => [:email], :with => EmailFormat }},
+      {class: ActiveRecord::Validations::UniquenessValidator, options: { :attributes => [:email] }}
+    ]
     @user.validations = validations
     @user.valid?.must_equal false
     @user.errors.count.must_equal 2
@@ -29,10 +33,10 @@ describe 'Model' do
 
   it 'respect conditional validations set onto the instance' do
     validations = [
-      ActiveModel::Validations::PresenceValidator.new(:attributes => [:first_name], :if => :can_validate?),
-      ActiveModel::Validations::PresenceValidator.new(:attributes => [:first_name], :if => Proc.new { |model| model.can_validate? }),
-      ActiveModel::Validations::PresenceValidator.new(:attributes => [:first_name], :unless => :cannot_validate?),
-      ActiveModel::Validations::PresenceValidator.new(:attributes => [:first_name], :unless => Proc.new { |model| model.cannot_validate? })
+      {class: ActiveModel::Validations::PresenceValidator, options: { :attributes => [:first_name], :if => :can_validate? }},
+      {class: ActiveModel::Validations::PresenceValidator, options: { :attributes => [:first_name], :if => Proc.new { |model| model.can_validate? }}},
+      {class: ActiveModel::Validations::PresenceValidator, options: { :attributes => [:first_name], :unless => :cannot_validate? }},
+      {class: ActiveModel::Validations::PresenceValidator, options: { :attributes => [:first_name], :unless => Proc.new { |model| model.cannot_validate? }}}
     ]
     def @user.can_validate?
       false

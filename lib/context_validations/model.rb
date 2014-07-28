@@ -22,7 +22,10 @@ module ContextValidations::Model
   #
   # @param [[ActiveMode::Validations::Validator]]
   def validations=(validations)
-    @validations = validations.flatten
+    @validations = validations.flatten.map do |validator|
+      validator[:options][:class] = self.class
+      validator[:class].new(validator[:options])
+    end
   end
 
   protected
